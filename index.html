@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link href="https://fonts.googleapis.com/css?family=Anton&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <title>Architecture Gallery</title>
 </head>
 <style>
@@ -34,6 +35,22 @@
         font-family: 'Anton', sans-serif;
         letter-spacing: 3px;
     }
+    .gallery .btn__main {
+       display: flex;
+       flex-direction: row;
+       justify-content: space-between;
+       
+    }
+    .gallery .btn__main p{
+        font-size: 3.2rem;
+        transition: all ease-out 0.5s;
+        cursor: pointer;
+        display:inline;
+         
+    }
+    .gallery .btn__main p:hover{
+        color: rgb(216, 188, 139);
+    }
     
     .gallery__main{
         margin: auto;
@@ -41,6 +58,7 @@
         height: 250px;
         overflow: hidden;
         position: relative;
+        margin-top: -215px;
     }
     .gallery__main ul{ 
         position: absolute;
@@ -57,21 +75,22 @@
         width: 100%;
         height: 100%;
     }
-    .main{
-        width: 100%;
-    }
-    .main__img{
-        width: 60%;
 
+    .text p{
+        font-size: 2.2rem;
     }
-    .main__img img{
-        width: 100%;
-    }
+
 </style>
 <body>
     <section class="gallery">
         <p>Architecture Gallery</p>
+        <div class="btn__main">
+            <p id="btn1"><i class="fa fa-mail-reply"></i></p>
+            <p id="btn2"><i class="fa fa-mail-forward"></i></p>
+        </div>
         <div class="gallery__main">
+
+            
             <ul>
                 <li><img src="img1.jpg" alt=""></li>
                 <li><img src="img2.jpg" alt=""></li>
@@ -80,17 +99,13 @@
                 <li><img src="img5.jpg" alt=""></li>
                 <li><img src="img6.jpg" alt=""></li>
             </ul>
+                   
         </div>
-    </section>
-    <section>
-        <div class="main">
-            <div class="main__img">
-                <img src="main.jpg" alt="">
-            </div>
-            <div class="main__title">
-                <p>Architecture, design and engineering activities</p>
-            </div>
+
+        <div class="text">
+            <p>可試著按下（ 左,右 ）兩側的箭頭來控制方向！！</p>
         </div>
+
     </section>
 
 
@@ -101,16 +116,48 @@
         let oUl = oMain.getElementsByTagName('ul')[0];
         let oLi = oUl.getElementsByTagName('li');
 
+        let space = +2;
+
+        let oBtn1 = document.querySelector('#btn1');
+        let oBtn2 = document.querySelector('#btn2');
+
+        
+
         oUl.innerHTML = oUl.innerHTML+oUl.innerHTML;
         oUl.style.width = oLi[0].offsetWidth * oLi.length+'px';
         
-        setInterval(function(){
-           if(oUl.offsetLeft<-oUl.offsetWidth/2){
-               oUl.style.left = 0;
-           } 
-           oUl.style.left = oUl.offsetLeft -2 + 'px';
+        function move() {
+            if (oUl.offsetLeft < -oUl.offsetWidth / 2) {
+                oUl.style.left = 0;
+            }
+            if (oUl.offsetLeft > 0) {
+                oUl.style.left = -oUl.offsetWidth / 2 + 'px';
+            }
+            oUl.style.left = oUl.offsetLeft + space + 'px';
 
-        },30);
+        };
+        let timer = setInterval(move,30);
+
+         oMain.onmouseover = function(){
+             clearInterval(timer);
+         }
+        //  開始輪播
+         oMain.onmouseout = function(){
+            timer = setInterval(move,30);
+         }
+        
+        // 左右按鈕
+        
+        //向左
+        oBtn1.addEventListener('click',function(){
+            space = -2;
+        });
+
+        //向右
+        oBtn2.addEventListener('click',function(){
+            space = +2;
+        });
+
     }
     
     </script>
